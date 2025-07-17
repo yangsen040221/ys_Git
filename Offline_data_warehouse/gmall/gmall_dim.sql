@@ -33,7 +33,6 @@ CREATE EXTERNAL TABLE dim_sku_full
     LOCATION '/warehouse/gmall/dim/dim_sku_full/'
     TBLPROPERTIES ('orc.compress' = 'snappy');
 
-
 with sku as (
     select
         *
