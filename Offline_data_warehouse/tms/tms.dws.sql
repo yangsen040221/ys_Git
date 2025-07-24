@@ -86,6 +86,7 @@ from (select org_id,
 select * from dws_trade_org_cargo_type_order_1d;
 
 
+
 //10.1.2 物流域转运站粒度揽收 1 日汇总表
 
 drop table if exists dws_trans_org_receive_1d;
