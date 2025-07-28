@@ -3,9 +3,8 @@ from pyspark.sql import functions as F
 from pyspark.sql import types as T
 from py4j.java_gateway import java_import
 
-
 # 初始化SparkSession
-spark = SparkSession.builder\
+spark = SparkSession.builder \
     .appName("py_tms") \
     .master("local[*]") \
     .config("hive.metastore.uris", "thrift://cdh01:9083") \
@@ -15,16 +14,16 @@ spark = SparkSession.builder\
     .enableHiveSupport() \
     .getOrCreate()
 
-#导入 Java 类并获取 HDFS 文件系统实例
+# 导入 Java 类并获取 HDFS 文件系统实例
 java_import(spark.sparkContext._gateway.jvm, "org.apache.hadoop.fs.Path")
 java_import(spark.sparkContext._gateway.jvm, "org.apache.hadoop.fs.FileSystem")
 
 # 获取HDFS文件系统实例，用于后续HDFS操作
 fs = spark.sparkContext._jvm.FileSystem.get(spark.sparkContext._jsc.hadoopConfiguration())
 
-
 # 使用数据库
 spark.sql("use tms")
+
 
 def create_hdfs_dir(path):
     jvm_path = spark.sparkContext._jvm.Path(path)  # 创建Hadoop Path对象
@@ -41,12 +40,12 @@ def repair_hive_table(table_name):
     spark.sql(f"MSCK REPAIR TABLE py_tms_dim.{table_name}")
     print(f"修复分区完成：py_tms_dim.{table_name}")
 
+
 # 新增：打印数据量的函数（验证数据是否存在）
 def print_data_count(df, table_name):
     count = df.count()
     print(f"{table_name} 处理后的数据量：{count} 行")
     return count
-
 
 
 # # ====================== 1. 小区维度表 dim_complex_full ======================
@@ -109,7 +108,6 @@ def print_data_count(df, table_name):
 #
 # # 修复分区
 # repair_hive_table("dim_complex_full")
-
 
 
 # # ====================== 2. 机构维度表 dim_organ_full ======================
@@ -287,7 +285,9 @@ line_info = spark.table("tms.ods_line_base_info").filter(
 
 dic_type = spark.table("tms.ods_base_dic").filter(
     (F.col("dt") == "20250718") & (F.col("is_deleted") == "0")
-).select("id", "name").withColumnRenamed("id", "transport_line_type_id").withColumnRenamed("name", "transport_line_type_name").alias("d")
+).select("id", "name").withColumnRenamed("id", "transport_line_type_id").withColumnRenamed("name",
+                                                                                           "transport_line_type_name").alias(
+    "d")
 
 joined = shift_info \
     .join(line_info, shift_info.line_id == line_info.id, "inner") \
@@ -308,7 +308,6 @@ joined.withColumn("dt", F.lit("20250718")) \
     .orc("/warehouse/py_tms/dim/dim_shift_full")
 
 repair_hive_table("dim_shift_full")
-
 
 # ====================== 6. 司机维度表 dim_truck_driver_full ======================
 create_hdfs_dir("/warehouse/py_tms/dim/dim_truck_driver_full")
@@ -364,7 +363,6 @@ joined.withColumn("dt", F.lit("20250718")) \
 
 repair_hive_table("dim_truck_driver_full")
 
-
 # ====================== 7. 卡车维度表 dim_truck_full ======================
 create_hdfs_dir("/warehouse/py_tms/dim/dim_truck_full")
 spark.sql("DROP TABLE IF EXISTS  py_tms_dim.dim_truck_full")
@@ -415,7 +413,8 @@ truck_info = spark.table("tms.ods_truck_info").filter(
 
 team_info = spark.table("tms.ods_truck_team").filter(
     (F.col("dt") == "20250718") & (F.col("is_deleted") == "0")
-).select("id", "name", "team_no", "org_id", "manager_emp_id").withColumnRenamed("id", "team_id").withColumnRenamed("name", "team_name").alias("tm")
+).select("id", "name", "team_no", "org_id", "manager_emp_id").withColumnRenamed("id", "team_id").withColumnRenamed(
+    "name", "team_name").alias("tm")
 
 model_info = spark.table("tms.ods_truck_model").filter(
     (F.col("dt") == "20250718") & (F.col("is_deleted") == "0")
@@ -429,7 +428,8 @@ org_info = spark.table("tms.ods_base_organ").filter(
 
 dic_type = spark.table("tms.ods_base_dic").filter(
     (F.col("dt") == "20250718") & (F.col("is_deleted") == "0")
-).select("id", "name").withColumnRenamed("id", "model_type").withColumnRenamed("name", "truck_model_type_name").alias("dt")
+).select("id", "name").withColumnRenamed("id", "model_type").withColumnRenamed("name", "truck_model_type_name").alias(
+    "dt")
 
 dic_brand = spark.table("tms.ods_base_dic").filter(
     (F.col("dt") == "20250718") & (F.col("is_deleted") == "0")
@@ -460,7 +460,6 @@ joined.withColumn("dt", F.lit("20250718")) \
     .orc("/warehouse/py_tms/dim/dim_truck_full")
 
 repair_hive_table("dim_truck_full")
-
 
 # ====================== 8. 用户拉链表 dim_user_zip ======================
 create_hdfs_dir("/warehouse/py_tms/dim/dim_user_zip")
@@ -516,7 +515,6 @@ user_df.withColumn("dt", F.lit("20250718")) \
 
 repair_hive_table("dim_user_zip")
 
-
 # ====================== 9. 用户地址拉链表 dim_user_address_zip ======================
 create_hdfs_dir("/warehouse/py_tms/dim/dim_user_address_zip")
 spark.sql("DROP TABLE IF EXISTS  py_tms_dim.dim_user_address_zip")
@@ -562,7 +560,5 @@ addr_df.withColumn("dt", F.lit("20250718")) \
     .orc("/warehouse/py_tms/dim/dim_user_address_zip")
 
 repair_hive_table("dim_user_address_zip")
-
-
 
 spark.stop()

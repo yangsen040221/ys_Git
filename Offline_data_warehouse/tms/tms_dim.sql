@@ -63,7 +63,7 @@ from (select id,
      ) complex_courier
      on complex_info.id = complex_courier.complex_id;
 
-select * from dim_complex_full;
+    select * from dim_complex_full;
 
 
 
@@ -195,7 +195,7 @@ from (select id,
          join (
     select id,
            org_name
-    from tms.ods_base_organ
+        from tms.ods_base_organ
     where dt = '20250718'
       and is_deleted = '0'
 ) organ_info
@@ -203,7 +203,7 @@ on express_cor_info.org_id = organ_info.id
          join (
     select id,
            name
-    from tms.ods_base_dic
+    from tms.c
     where dt = '20250718'
       and is_deleted = '0'
 ) dic_info
@@ -275,7 +275,7 @@ from (select id,
              driver2_emp_id,
              truck_id,
              pair_shift_id
-      from tms.ods_line_base_shift
+          from tms.ods_line_base_shift
       where dt = '20250718'
         and is_deleted = '0') shift_info
          join
