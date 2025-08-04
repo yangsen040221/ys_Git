@@ -145,7 +145,7 @@ select * from ads_activity_effect_ranking;
 
 
 -- 用户分群价值分析表
-CREATE TABLE IF NOT EXISTS ads_user_segment_value
+    CREATE TABLE IF NOT EXISTS ads_user_segment_value
 (
     segment_id            BIGINT NOT NULL AUTO_INCREMENT COMMENT '分群ID',
     age_group             VARCHAR(20) COMMENT '年龄组',
