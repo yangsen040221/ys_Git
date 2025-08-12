@@ -1,7 +1,8 @@
-from pyspark.sql import SparkSession 
-import pymysql 
-import logging 
-from typing import Dict, List, Tuple 
+from pyspark.sql import SparkSession
+import pymysql
+import logging
+from typing import Dict, List, Tuple
+from collections import OrderedDict
 
 # 配置日志记录
 logging.basicConfig(
@@ -43,15 +44,22 @@ class HiveToMySQLSync:
 
     def get_hive_table_schema(self, table_name: str) -> Tuple[List[Tuple], str]:
         """获取表结构和注释"""
-        # 获取列信息
         df = self.spark.sql(f"DESCRIBE {self.hive_db}.{table_name}")
         columns = []
+        seen_columns = set()  # 用于跟踪已经见过的列名
+        
         for row in df.collect():
-            if not row.col_name.startswith('#'):  # 跳过分区字段
+            if not row.col_name.startswith('#'):
+                col_name = row.col_name
+                # 处理重复列名问题
+                if col_name in seen_columns:
+                    logging.warning(f"表 {table_name} 中发现重复列名: {col_name}，将跳过重复列")
+                    continue
+                seen_columns.add(col_name)
+                
                 comment = row.comment if hasattr(row, 'comment') else ''
-                columns.append((row.col_name, row.data_type.lower(), comment))
+                columns.append((col_name, row.data_type.lower(), comment))
 
-        # 获取表注释
         table_comment = self.spark.sql(
             f"SHOW TABLE EXTENDED IN {self.hive_db} LIKE '{table_name}'"
         ).collect()[0][0] or ""
@@ -59,7 +67,8 @@ class HiveToMySQLSync:
         return columns, table_comment
 
     def convert_data_type(self, hive_type: str) -> str:
-        """增强版类型映射，处理Hive与MySQL之间的类型不兼容问题"""
+        """类型映射，处理Hive与MySQL不兼容问题，给时间类型加默认值"""
+        hive_type_lower = hive_type.lower()
         type_map = {
             'string': 'VARCHAR(512)',
             'varchar': 'VARCHAR(255)',
@@ -69,31 +78,30 @@ class HiveToMySQLSync:
             'double': 'DOUBLE',
             'float': 'FLOAT',
             'boolean': 'TINYINT(1)',
-            'timestamp': 'TIMESTAMP',  # MySQL的TIMESTAMP类型
+            # 给时间类型加默认值，避免 1067 错误
+            'timestamp': "TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP",
+            'datetime': "DATETIME NULL DEFAULT CURRENT_TIMESTAMP",
             'date': 'DATE',
             'binary': 'BLOB'
         }
-        if hive_type.startswith('decimal'):
-            return hive_type.upper().replace('decimal', 'DECIMAL')
-        return type_map.get(hive_type, 'TEXT')
+        if hive_type_lower.startswith('decimal'):
+            return hive_type_lower.upper().replace('DECIMAL', 'DECIMAL')
+        return type_map.get(hive_type_lower, 'TEXT')
 
     def generate_mysql_ddl(self, table_name: str, columns: List[Tuple], comment: str) -> str:
-        """生成MySQL建表语句，包含主键检测"""
+        """生成MySQL建表语句"""
         column_defs = []
         primary_keys = []
 
-        for col in columns:
-            name, col_type, col_comment = col
+        for name, col_type, col_comment in columns:
             mysql_type = self.convert_data_type(col_type)
             comment_clause = f" COMMENT '{col_comment}'" if col_comment else ''
 
-            # 假设名为id的字段是主键
             if name.lower() == 'id':
                 primary_keys.append(f"`{name}`")
 
             column_defs.append(f" `{name}` {mysql_type}{comment_clause}")
 
-        # 添加主键约束
         if primary_keys:
             column_defs.append(f" PRIMARY KEY ({', '.join(primary_keys)})")
 
@@ -123,7 +131,8 @@ class HiveToMySQLSync:
         """批量同步数据到MySQL"""
         try:
             df = self.spark.sql(f"SELECT * FROM {self.hive_db}.{table_name}")
-            columns = df.schema.names
+            # 获取去重后的列名
+            columns = list(OrderedDict.fromkeys(df.columns))  # 保持顺序的去重
             rows = df.collect()
 
             with self.get_mysql_connection() as conn:
@@ -132,7 +141,9 @@ class HiveToMySQLSync:
                     insert_sql = f"INSERT INTO {table_name} ({', '.join(columns)}) VALUES ({placeholders})"
 
                     for row in rows:
-                        cursor.execute(insert_sql, tuple(row))
+                        # 只选择不重复的列值
+                        values = tuple([row[col] for col in columns])
+                        cursor.execute(insert_sql, values)
 
             logging.info(f"表 {table_name} 数据同步完成，记录数: {len(rows)}")
         except Exception as e:
@@ -150,16 +161,8 @@ class HiveToMySQLSync:
                 logging.error(f"表 {table} 同步失败，跳过继续处理其他表")
                 continue
 
+
 if __name__ == "__main__":
-    # spark = SparkSession.builder \
-    #     .appName("EnhancedHiveMySQLSync") \
-    #     .config("spark.sql.warehouse.dir", "/user/hive/warehouse") \
-    #     .config("hive.metastore.uris", "thrift://cdh01:9083") \
-    #     .config("spark.hadoop.fs.defaultFS", "hdfs://cdh01:8020") \
-    #     .config("spark.sql.execution.arrow.enabled", "true") \
-    #     .config("spark.sql.parquet.writeLegacyFormat", "true") \
-    #     .enableHiveSupport() \
-    #     .getOrCreate()
     spark = SparkSession.builder \
         .appName("EnhancedHiveMySQLSync") \
         .config("spark.local.dir", "F:\data") \
@@ -176,9 +179,9 @@ if __name__ == "__main__":
         'port': 3306,
         'user': 'root',
         'password': 'root',
-        'database': 'tms_ads'
+        'database': 'sx_one_3_03'
     }
 
-    syncer = HiveToMySQLSync(spark, "tms_ads", config)
+    syncer = HiveToMySQLSync(spark, "sx_one_3_03", config)
     syncer.run_sync()
     spark.stop()
