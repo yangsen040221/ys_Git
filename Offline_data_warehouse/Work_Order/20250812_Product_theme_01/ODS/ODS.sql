@@ -7,6 +7,7 @@ USE sx_one_3_01;
 -- ==============================================================
 -- 1. 商品信息表
 -- ==============================================================
+-- 存放商品基础信息，包括商品 ID、商品名称、分类 ID、分类名称、价格、创建时间。
 DROP TABLE IF EXISTS ods_product_info;
 CREATE TABLE ods_product_info
 (
@@ -25,6 +26,8 @@ SELECT * FROM ods_product_info;
 -- ==============================================================
 -- 2. 商品访客表（新增 is_micro_detail）
 -- ==============================================================
+-- 记录商品访客行为，包含停留时间、终端类型，
+-- 以及 `is_micro_detail` 微详情标记
 DROP TABLE IF EXISTS ods_product_visit;
 CREATE TABLE ods_product_visit
 (
@@ -44,6 +47,7 @@ SELECT * FROM ods_product_visit;
 -- ==============================================================
 -- 3. 商品收藏表
 -- ==============================================================
+-- 记录商品收藏行为
 DROP TABLE IF EXISTS ods_product_favorite;
 CREATE TABLE ods_product_favorite
 (
@@ -60,6 +64,7 @@ SELECT * FROM ods_product_favorite;
 -- ==============================================================
 -- 4. 商品加购表
 -- ==============================================================
+-- 记录商品加购行为，包括加购数量
 DROP TABLE IF EXISTS ods_product_cart;
 CREATE TABLE ods_product_cart
 (
@@ -77,6 +82,7 @@ SELECT * FROM ods_product_cart;
 -- ==============================================================
 -- 5. 订单信息表（新增 activity_type）
 -- ==============================================================
+-- 记录订单信息，包含 `activity_type` 活动类型字段，比如是否参与聚划算。
 DROP TABLE IF EXISTS ods_order_info;
 CREATE TABLE ods_order_info
 (
@@ -97,6 +103,7 @@ SELECT * FROM ods_order_info;
 -- ==============================================================
 -- 6. 支付信息表（新增 activity_type）
 -- ==============================================================
+-- 记录支付信息，同样包含活动类型
 DROP TABLE IF EXISTS ods_payment_info;
 CREATE TABLE ods_payment_info
 (
@@ -117,6 +124,7 @@ SELECT * FROM ods_payment_info;
 -- ==============================================================
 -- 7. 退款信息表
 -- ==============================================================
+-- 记录退款信息，包括退款类型。
 DROP TABLE IF EXISTS ods_refund_info;
 CREATE TABLE ods_refund_info
 (
