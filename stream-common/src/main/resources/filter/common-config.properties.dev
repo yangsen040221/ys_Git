@@ -1,0 +1,17 @@
+##env
+env=dev
+
+# MySQL
+mysql.host=192.168.142.130
+
+
+# Kafka
+Kafka.bootstrap.servers= cdh01:9092,cdh02:9092,cdh03:9092
+REALTIME.KAFKA.LOG.TOPIC = realtime_log
+kafka.dirty.topic = dirty_log
+kafka.err.log = err_log
+kafka.start.log = start_log
+kafka.display.log = display_log
+kafka.action.log = action_log
+kafka.page.topic = ods_page_log
+

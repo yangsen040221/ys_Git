@@ -1,6 +1,8 @@
+package sqlserver;
+
 import com.ververica.cdc.connectors.base.options.StartupOptions;
 import com.ververica.cdc.connectors.sqlserver.SqlServerSource;
-//import com.ververica.cdc.connectors.sqlserver.table.StartupOptions;
+//import com.ververica.cdc.connectors.sqlserver.sqlserver.table.StartupOptions;
 import com.ververica.cdc.debezium.DebeziumSourceFunction;
 import com.ververica.cdc.debezium.JsonDebeziumDeserializationSchema;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
