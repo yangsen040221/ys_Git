@@ -1,6 +1,7 @@
-package realtime_v1.func;
+package com.realtime_v1.func;
 
 import com.alibaba.fastjson.JSONObject;
+import com.realtime_v1.domain.TableProcessDim;
 import com.stream.common.utils.ConfigUtils;
 import com.stream.common.utils.HbaseUtils;
 import com.stream.common.utils.JdbcUtils;
@@ -15,7 +16,6 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.MD5Hash;
-import realtime_v1.domain.TableProcessDim;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;

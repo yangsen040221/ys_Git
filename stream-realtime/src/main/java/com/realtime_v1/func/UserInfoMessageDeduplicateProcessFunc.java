@@ -1,4 +1,4 @@
-package realtime_v1.func;
+package com.realtime_v1.func;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.flink.api.common.state.StateTtlConfig;

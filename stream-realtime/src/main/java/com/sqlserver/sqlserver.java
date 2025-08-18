@@ -1,4 +1,4 @@
-package sqlserver;
+package com.sqlserver;
 
 import com.ververica.cdc.connectors.base.options.StartupOptions;
 import com.ververica.cdc.connectors.sqlserver.SqlServerSource;

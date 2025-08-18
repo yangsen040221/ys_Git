@@ -1,4 +1,4 @@
-package realtime_v1.func;
+package com.realtime_v1.func;
 
 import avro.shaded.com.google.common.cache.Cache;
 import avro.shaded.com.google.common.cache.CacheBuilder;
@@ -21,12 +21,7 @@ import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @Package com.retailersv1.func.AsyncHbaseDimBaseDicFunc
- * @Author zhou.han
- * @Date 2025/3/15 20:47
- * @description: Async DimBaseDic
- */
+
 public class AsyncHbaseDimBaseDicFunc extends RichAsyncFunction<JSONObject,JSONObject> {
 
     private transient Connection hbaseConn;

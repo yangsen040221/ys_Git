@@ -29,12 +29,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-/**
- * time: 2021/8/11 10:20 className: KafkaUtils.java
- *
- * @author han.zhou
- * @version 1.0.0
- */
 public final class KafkaUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaUtils.class);

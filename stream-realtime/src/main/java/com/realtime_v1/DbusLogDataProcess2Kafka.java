@@ -1,4 +1,4 @@
-package realtime_v1;
+package com.realtime_v1;
 
 import com.alibaba.fastjson.JSONObject;
 import com.stream.common.utils.*;
@@ -18,7 +18,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
-import realtime_v1.func.ProcessSplitStreamFunc;
+import com.realtime_v1.func.ProcessSplitStreamFunc;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -83,7 +83,7 @@ public class DbusLogDataProcess2Kafka {
                         kafka_botstrap_servers,
                         kafka_topic_base_log_data,
                         new Date().toString(),
-                        OffsetsInitializer.latest()
+                        OffsetsInitializer.earliest()
                 ),
                 WatermarkStrategy.noWatermarks(),
                 "read_kafka_realtime_log"

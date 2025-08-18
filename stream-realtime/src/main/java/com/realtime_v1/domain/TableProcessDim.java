@@ -1,4 +1,4 @@
-package realtime_v1.domain;
+package com.realtime_v1.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

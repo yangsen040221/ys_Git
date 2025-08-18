@@ -1,4 +1,4 @@
-package realtime_v1.func;
+package com.realtime_v1.func;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.flink.api.common.functions.RichFilterFunction;
@@ -12,12 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 
-/**
- * @Package com.retailersv1.func.FilterBloomDeduplicatorFunc
- * @Author zhou.han
- * @Date 2025/3/31 22:25
- * @description: 布隆过滤器
- */
+
 public class FilterBloomDeduplicatorFunc extends RichFilterFunction<JSONObject> {
 
     private static final Logger logger = LoggerFactory.getLogger(FilterBloomDeduplicatorFunc.class);
