@@ -4,7 +4,7 @@ env=dev
 # MySQL
 mysql.host = 192.168.142.130
 mysql.port = 3306
-mysql.url = jdbc:mysql://cdh03:3306/realtime_v1?useSSL=false&serverTimezone=Asia/Shanghai
+mysql.url = jdbc:mysql://cdh03:3306/realtime_v1?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf-8
 mysql.timezone = Asia/Shanghai
 mysql.database = realtime_v1
 mysql.databases.conf = realtime_v1_config
@@ -27,5 +27,4 @@ kafka.cdc.db.topic = mysql-cdc-realtime-db-changes
 zookeeper.server.host.list = 192.168.142.128:2181
 
 # Hbase
-hbase.namespace = dim
-
+hbase.namespace = realtime_v2

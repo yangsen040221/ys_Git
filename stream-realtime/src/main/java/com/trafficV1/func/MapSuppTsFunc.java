@@ -3,7 +3,9 @@ package com.trafficV1.func;
 import com.alibaba.fastjson2.JSONObject;
 import org.apache.flink.api.common.functions.RichMapFunction;
 
+import java.sql.BatchUpdateException;
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;

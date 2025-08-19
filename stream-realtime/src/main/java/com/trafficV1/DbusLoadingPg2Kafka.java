@@ -1,7 +1,6 @@
 package com.trafficV1;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONException;
 import com.alibaba.fastjson2.JSONObject;
 import com.stream.common.utils.ConfigUtils;
 import com.stream.common.utils.EnvironmentSettingUtils;
@@ -17,8 +16,6 @@ import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -30,8 +27,6 @@ import java.util.Objects;
  * @description: Loading Postgresql & Task 01
  */
 public class DbusLoadingPg2Kafka {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DbusLoadingPg2Kafka.class);
 
     private static final String kafka_botstrap_servers = ConfigUtils.getString("kafka.bootstrap.servers");
     private static final String kafka_topic_traffic_car_info = "realtime_v3_traffic_origin_data_info";
@@ -65,17 +60,7 @@ public class DbusLoadingPg2Kafka {
 
         DataStreamSource<String> pgCdcSource = env.fromSource(postgresIncrementalSource, WatermarkStrategy.forBoundedOutOfOrderness(Duration.ofSeconds(5)), "DbusLoadingPgDataETL_postgresIncrementalSource");
 
-        SingleOutputStreamOperator<JSONObject> mapData2JsonDs = pgCdcSource.map(data -> {
-                    try {
-                        // 预处理JSON字符串，处理非法反斜杠字符
-                        String processedData = data.replaceAll("(?<!\\\\)\\\\(?!\\\\)", "\\\\\\\\");
-                        return JSON.parseObject(processedData);
-                    } catch (JSONException e) {
-                        LOG.error("JSON parsing failed for data: {}", data, e);
-                        LOG.error("Error position: {}", e.getMessage());
-                        throw e;
-                    }
-                })
+        SingleOutputStreamOperator<JSONObject> mapData2JsonDs = pgCdcSource.map(JSON::parseObject)
                 .uid("map_source_data_to_json")
                 .name("_map_source_data_to_json");
 

@@ -8,11 +8,11 @@
     <artifactId>ys_Git</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
     <modules>
-        <module>stream-realtime</module>
         <module>stream-common</module>
+        <module>stream-realtime</module>
     </modules>
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -34,9 +34,11 @@
         <cdh.dep.version>3.0.0-cdh6.3.2</cdh.dep.version>
     </properties>
 
-
     <repositories>
-        <!-- 其他仓库 -->
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+        </repository>
         <repository>
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
@@ -365,6 +367,7 @@
             </resource>
         </resources>
     </build>
+
 
 
 </project>

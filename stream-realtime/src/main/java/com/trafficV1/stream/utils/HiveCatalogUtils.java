@@ -1,6 +1,8 @@
 package com.trafficV1.stream.utils;
 
 import com.stream.common.utils.ConfigUtils;
+import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.catalog.hive.HiveCatalog;
 
 /**

@@ -2,10 +2,7 @@ package com.stream.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
-import org.apache.hadoop.hbase.CellUtil;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HConstants;
-import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.FirstKeyOnlyFilter;
 import org.apache.hadoop.hbase.io.compress.Compression;
@@ -18,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
+
+import static org.apache.hadoop.hbase.CellUtil.cloneQualifier;
+import static org.apache.hadoop.hbase.CellUtil.cloneValue;
 
 /**
  * @author han.zhou
