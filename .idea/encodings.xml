@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/py_spark/Script/tms_hive_ddl.sql" charset="GBK" />
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/docs/202508/20250819/20250819.md" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-common/src/main/java" charset="UTF-8" />
@@ -9,20 +9,11 @@
     <file url="file://$PROJECT_DIR$/stream-common/src/test/java/StrTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/java/VehicleDataPrinter.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/java/kafka/CDHKafkaProducer.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/java/kafka/Kafka2Doris.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/resources/log4j (1).properties" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/resources/log4j (2).properties" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/main/resources/log4j.properties" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/test/java/JdbcTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/test/java/ReadDorisTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/test/java/Test.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/stream-realtime/src/test/java/TestEncode.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/stream-realtime/src/test/java/TestFlinkCk2MinIO.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/untitled/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/untitled/src/main/resources" charset="UTF-8" />
-    <file url="PROJECT" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -19,12 +19,7 @@ import java.util.Map;
 import static org.apache.hadoop.hbase.CellUtil.cloneQualifier;
 import static org.apache.hadoop.hbase.CellUtil.cloneValue;
 
-/**
- * @author han.zhou
- * @time: 2021/10/14 11:39
- * @className: HBaseUtils
- * @description HBase 工具类
- */
+
 public class HbaseUtils {
     private Connection connection;
     private static final Logger LOG = LoggerFactory.getLogger(HbaseUtils.class.getName());
@@ -212,7 +207,7 @@ public class HbaseUtils {
         HbaseUtils hbaseUtils = new HbaseUtils("cdh01,cdh02,cdh03");
 //        hbaseUtils.dropHbaseNameSpace("GMALL_FLINK_2207");
 //        System.err.println(hbaseUtils.tableIsExists("realtime_v2:dim_user_info"));
-        hbaseUtils.deleteTable("ns_zxn:dim_base_category1");
+//        hbaseUtils.deleteTable("ns_zxn:dim_base_category1");
 //        hbaseUtils.getHbaseNameSpaceAllTablesList("realtime_v2");
     }
 }
