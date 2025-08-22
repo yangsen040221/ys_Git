@@ -11,9 +11,8 @@ mysql.databases.conf = realtime_v1_config
 mysql.user = root
 mysql.pwd = root
 
-
 # Kafka
-Kafka.bootstrap.servers = 192.168.142.128:9092,192.168.142.129:9092,192.168.142.130:9092
+Kafka.bootstrap.servers = 192.168.142.128:9092
 REALTIME.KAFKA.LOG.TOPIC = realtime_log
 kafka.dirty.topic = dirty_log
 kafka.err.log = err_log
@@ -22,7 +21,15 @@ kafka.display.log = display_log
 kafka.action.log = action_log
 kafka.page.topic = ods_page_log
 kafka.cdc.db.topic = mysql-cdc-realtime-db-changes
+
+# DWD
 kafka.dwd.comment.info = dwd_comment_info
+kafka.dwd.return.order.info = dwd_return_order_info
+kafka.dwd.cart.info = dwd_cart_info
+kafka.dwd.trade.order.detail = dwd_order_detail
+kafka.dwd.trade.order.refund = dwd_order_refund
+kafka.dwd.trade.refund.pay.suc.detail = dwd_refund_pay_suc_detail
+
 
 # Zookeeper
 zookeeper.server.host.list = 192.168.142.128:2181
