@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @Package com.retailersv1.domain.TableProcessDim
- * @Author zhou.han
- * @Date 2024/12/20 09:02
- * @description: /
+ * @Package com.retailersv.domain
+ * @Author xiaoye
+ * @Date 2025/8/15 10:07
+ * @description:
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

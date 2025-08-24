@@ -2,7 +2,7 @@
 env=dev
 
 # MySQL
-mysql.host = 192.168.142.130
+mysql.host = cdh03
 mysql.port = 3306
 mysql.url = jdbc:mysql://cdh03:3306/realtime_v1?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf-8
 mysql.timezone = Asia/Shanghai
@@ -12,7 +12,7 @@ mysql.user = root
 mysql.pwd = root
 
 # Kafka
-Kafka.bootstrap.servers = 192.168.142.128:9092
+Kafka.bootstrap.servers = cdh01:9092,cdh02:9092,cdh03:9092
 REALTIME.KAFKA.LOG.TOPIC = realtime_log
 kafka.dirty.topic = dirty_log
 kafka.err.log = err_log
@@ -27,8 +27,9 @@ kafka.dwd.comment.info = dwd_comment_info
 kafka.dwd.return.order.info = dwd_return_order_info
 kafka.dwd.cart.info = dwd_cart_info
 kafka.dwd.trade.order.detail = dwd_order_detail
-kafka.dwd.trade.order.refund = dwd_order_refund
-kafka.dwd.trade.refund.pay.suc.detail = dwd_refund_pay_suc_detail
+kafka.dwd.return.money.topic = dwd_order_return_money
+kafka.dwd.payment.info = dwd_payment_info
+kafka.dwd.cancel.order_detail = dwd_cancel_order_detail
 
 
 # Zookeeper
@@ -36,3 +37,7 @@ zookeeper.server.host.list = 192.168.142.128:2181
 
 # Hbase
 hbase.namespace = realtime_v2
+
+#doris
+doris.fe.nodes = 192.168.142.128:8030
+doris.database = gmall2025_realtime
