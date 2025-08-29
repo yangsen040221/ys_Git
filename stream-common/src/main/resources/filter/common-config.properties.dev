@@ -31,6 +31,8 @@ kafka.dwd.return.money.topic = dwd_order_return_money
 kafka.dwd.payment.info = dwd_payment_info
 kafka.dwd.cancel.order_detail = dwd_cancel_order_detail
 
+kafka.ods.goods.cart.behavior = ods_goods_cart_behavior
+
 
 # Zookeeper
 zookeeper.server.host.list = 192.168.142.128:2181
