@@ -32,6 +32,11 @@ kafka.dwd.payment.info = dwd_payment_info
 kafka.dwd.cancel.order_detail = dwd_cancel_order_detail
 
 kafka.ods.goods.cart.behavior = ods_goods_cart_behavior
+kafka.dwd.goods.cart.valid.behavior = dwd_goods_cart_behavior
+kafka.ods_order_payment_behavior = ods_order_payment_behavior
+kafka.dwd_order_payment_behavior = dwd_order_payment_behavior
+kafka.ods_shop_visit_behavior = ods_shop_visit_behavior
+kafka.dwd_shop_visit_behavior = dwd_shop_visit_behavior
 
 
 # Zookeeper
